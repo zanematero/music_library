@@ -8,19 +8,21 @@ function App(){
     let [data, setData] = useState([])
 
     useEffect(() => {
-      fetch('https://itunes.apple.com/search?term=the%20grateful%20dead')
+      fetch(`https://itunes.apple.com/search?term=${search}`)
         .then(response => response.json())
         .then(({resultCount, results}) => {
-          setMessage(`Successfully fetched ${resultCount} result(s)!`)
+          const successMessage = `Successfully fetched ${resultCount} result(s)!`
+          const failMessage = 'Failed to find any results for your search'
+          setMessage(resultCount ? successMessage : failMessage)
           setData(results)
           console.log(results)
         })
 
-    }, [])
+    }, [search])
   
     return (
         <div>
-            <Search />
+            <Search setSearch={setSearch}/>
             {message}
             <Gallery data={data}/>
         </div>
