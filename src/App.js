@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import Gallery from './components/Gallery'
 import Search from './components/Search'
+import Wrapper from './components/Wrapper'
+import { dataContext } from './context/dataContext'
 
 function App(){
     let [search, setSearch] = useState('')
@@ -24,7 +26,9 @@ function App(){
         <div>
             <Search setSearch={setSearch}/>
             {message}
-            <Gallery data={data}/>
+            <dataContext.Provider value={data} >
+              <Wrapper data={data}/>
+            </dataContext.Provider>
         </div>
     )
 }
