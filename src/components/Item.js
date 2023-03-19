@@ -5,20 +5,19 @@ export default function Item({song}) {
 
     const simpleStyle = {
         'width': '25vw',
-        'height': '20vh',
+        'height': '25vh',
         'border': '1px solid black',
         'margin': '2px'
     }
     
     const detailStyle = {
         'width': '80vw',
-        'height': '20vh',
+        'height': '50vh',
         'border': '1px solid black',
         'margin': '2px',
-        'backgroundImage': `url(${song.artworkUrl100})`,
         'backgroundRepeat': 'no-repeat',
         'backgroundSize': 'cover',
-        'color': 'yellow'
+        'color': 'black'
     }
     
     const simpleView = (
@@ -34,6 +33,7 @@ export default function Item({song}) {
                 <h3>{song.collectionName}</h3>
                 <h4>{song.primaryGenreName}</h4>
                 <h4>{song.releaseDate}</h4>
+                <img src={song.artworkUrl100}/>
             </div>
     )
 
