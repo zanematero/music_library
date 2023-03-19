@@ -1,35 +1,45 @@
-import { useEffect, useState, useRef } from 'react'
-import Search from './components/Search'
-import Wrapper from './components/Wrapper'
-import { dataContext } from './context/dataContext'
-import { searchContext } from './context/searchContext'
-function App(){
+import { useEffect, useState } from 'react'
+import Gallery from './components/Gallery'
+import SearchBar from './components/SearchBar'
+import { DataContext } from './context/DataContext'
+
+function App() {
+    let [search, setSearch] = useState('')
     let [message, setMessage] = useState('Search for Music!')
     let [data, setData] = useState([])
-    let inputRef = useRef()
 
-  const fetchData = () => {
-    document.title = inputRef.current.value
-        fetch(`https://itunes.apple.com/search?term=${inputRef.current.value}`)
-          .then(response => response.json())
-          .then(({resultCount, results}) => {
-            const successMessage = `Successfully fetched ${resultCount} result(s)!`
-            const failMessage = 'Failed to find any results for your search'
-            setMessage(resultCount ? successMessage : failMessage)
-            setData(results)
-          })
-  } 
+    const API_URL = 'https://itunes.apple.com/search?term='
+
+    useEffect(() => {
+        if (search) {
+            const fetchData = async () => {
+                document.title = `${search} Music`
+                const response = await fetch(API_URL + search)
+                const resData = await response.json()
+                if (resData.results.length > 0) {
+                    setData(resData.results)
+                } else {
+                    setMessage('Not Found')
+                }
+            }
+            fetchData()
+        }
+    }, [search])
+
+    const handleSearch = (e, term) => {
+        e.preventDefault()
+        setSearch(term)
+    }
+
     return (
         <div>
-            <searchContext.Provider value={{ref: inputRef, fetchData}}>
-              <Search/>
-            </searchContext.Provider>
+            <SearchBar handleSearch={handleSearch} />
             {message}
-            <dataContext.Provider value={data} >
-              <Wrapper data={data}/>
-            </dataContext.Provider>
+            <DataContext.Provider value={data}>
+                <Gallery />
+            </DataContext.Provider>
         </div>
-    )
+    );
 }
 
-export default App
+export default App;
