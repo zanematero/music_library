@@ -35,12 +35,12 @@ function App() {
 
     return (
         <div>
-        {message}
             <Router>
                 <Routes>
                     <Route path="/" element={
                         <>
                             <SearchBar handleSearch = {handleSearch}/>
+                            {message}
                             <Gallery data={data} />
                         </>
                     } />

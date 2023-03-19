@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 function Item(props) {
     let [view, setView] = useState(false)
@@ -12,7 +13,7 @@ function Item(props) {
 
     const detailStyle = {
         'width': '80vw',
-        'height': '20vh',
+        'height': '30vh',
         'border': '1px solid black',
         'margin': '2px',
         'backgroundImage': `url(${props.item.artworkUrl100})`,
@@ -24,8 +25,8 @@ function Item(props) {
     const simpleView = () => {
         return (
             <div style={simpleStyle}>
-                <h3>{props.item.trackName}</h3>
-                <h4>{props.item.collectionName}</h4>
+                <h2>{props.item.trackName}</h2>
+                <h3><Link to={`/artist/${props.item.artistId}`}>{props.item.artistName}</Link></h3>
             </div>
         )
     }
@@ -34,7 +35,8 @@ function Item(props) {
         return (
             <div style={detailStyle}>
                 <h2>{props.item.trackName}</h2>
-                <h3>{props.item.collectionName}</h3>
+                <h2><Link to={`/artist/${props.item.artistId}`}>{props.item.artistName}</Link></h2>
+                <h3><Link to={`/album/${props.item.collectionId}`}>{props.item.collectionName}</Link></h3>
                 <h4>{props.item.primaryGenreName}</h4>
                 <h4>{props.item.releaseDate}</h4>
             </div>
@@ -43,7 +45,6 @@ function Item(props) {
 
     return (
         <div onClick={() => setView(!view)} style={{ 'display': 'inline-block' }}>
-            <p>One Gallery Item</p>
             {view ? detailView() : simpleView()}
         </div>
     )
