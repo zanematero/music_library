@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Gallery from './components/Gallery'
 import SearchBar from './components/SearchBar'
@@ -34,21 +34,24 @@ function App() {
     }
 
     return (
-        <div>
-            <Router>
-                <Routes>
-                    <Route path="/" element={
-                        <>
-                            <SearchBar handleSearch = {handleSearch}/>
-                            {message}
-                            <Gallery data={data} />
-                        </>
-                    } />
-                    <Route path="/album/:id" element={<AlbumView />} />
-                    <Route path="/artist/:id" element={<ArtistView />} />
-                </Routes>
-            </Router>
-        </div>
+        <Suspense fallback={alert('Loading...')}>
+            <div>
+                <Router>
+                    <Routes>
+                        <Route path="/" element={
+                            <>
+                                <SearchBar handleSearch = {handleSearch}/>
+                                {message}
+                                    <Gallery data={data} />
+                            </>
+                        } />
+                        <Route path="/album/:id" element={<AlbumView />} />
+                        <Route path="/artist/:id" element={<ArtistView />} />
+                    </Routes>
+                </Router>
+            </div>
+        </Suspense>
+
     );
 }
 

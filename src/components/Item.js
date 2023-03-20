@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 function Item(props) {
@@ -44,9 +44,9 @@ function Item(props) {
     }
 
     return (
-        <div onClick={() => setView(!view)} style={{ 'display': 'inline-block' }}>
-            {view ? detailView() : simpleView()}
-        </div>
+            <div onClick={() => setView(!view)} style={{ 'display': 'inline-block' }}>
+                {view ? detailView() : simpleView()}
+            </div>
     )
 }
 
